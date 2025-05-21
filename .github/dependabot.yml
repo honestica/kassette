@@ -1,0 +1,10 @@
+version: 2
+
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: "10:00"
+    timezone: Europe/Paris
+    day: monday

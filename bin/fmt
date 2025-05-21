@@ -1,0 +1,12 @@
+#!/bin/bash
+
+export PYTHONPATH=kassette:${PYTHONPATH}
+
+set -e
+set -u
+set -o pipefail
+
+cd "$(dirname "$0")/.."
+
+isort --profile black kassette
+exec black kassette

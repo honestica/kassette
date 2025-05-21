@@ -1,0 +1,63 @@
+config:
+  examples_dir: examples
+  kinds:
+    deploy:
+      enabled: false # by default, as we may do not want activate it in all examples
+      filters:
+        out: # well know items changing at each execution
+          - .items.[].metadata.creationTimestamp
+          - .items.[].metadata.generation
+          - .items.[].metadata.labels.chart
+          - .items.[].metadata.labels.{app.kubernetes.io/version}
+          - .items.[].metadata.labels.{helm.sh/chart}
+          - .items.[].metadata.resourceVersion
+          - .items.[].metadata.uid
+          - .items.[].spec.template.metadata.creationTimestamp
+          - .items.[].spec.template.metadata.labels.chart
+          - .items.[].spec.template.metadata.labels.{app.kubernetes.io/version}
+          - .items.[].spec.template.metadata.labels.{helm.sh/chart}
+          - .items.[].status
+    configmap:
+      enabled: false # by default, as we may do not want activate it in all examples
+      filters:
+        out: # well know items changing at each execution
+          - .items.[].metadata.creationTimestamp
+          - .items.[].metadata.generation
+          - .items.[].metadata.labels.chart
+          - .items.[].metadata.labels.{app.kubernetes.io/version}
+          - .items.[].metadata.labels.{helm.sh/chart}
+          - .items.[].metadata.resourceVersion
+          - .items.[].metadata.uid
+    secret:
+      enabled: false # by default, as we may do not want activate it in all examples
+      filters:
+        out: # well know items changing at each execution
+          - .items.[].metadata.creationTimestamp
+          - .items.[].metadata.generation
+          - .items.[].metadata.labels.chart
+          - .items.[].metadata.labels.{app.kubernetes.io/version}
+          - .items.[].metadata.labels.{helm.sh/chart}
+          - .items.[].metadata.resourceVersion
+          - .items.[].metadata.uid
+    service:
+      enabled: false # by default, as we may do not want activate it in all examples
+      filters:
+        out: # well know items changing at each execution
+          - .items.[].metadata.creationTimestamp
+          - .items.[].metadata.generation
+          - .items.[].metadata.labels.chart
+          - .items.[].metadata.labels.{app.kubernetes.io/version}
+          - .items.[].metadata.labels.{helm.sh/chart}
+          - .items.[].metadata.resourceVersion
+          - .items.[].metadata.uid
+    serviceAccount:
+      enabled: false # by default, as we may do not want activate it in all examples
+      filters:
+        out: # well know items changing at each execution
+          - .items.[].metadata.creationTimestamp
+          - .items.[].metadata.generation
+          - .items.[].metadata.labels.chart
+          - .items.[].metadata.labels.{app.kubernetes.io/version}
+          - .items.[].metadata.labels.{helm.sh/chart}
+          - .items.[].metadata.resourceVersion
+          - .items.[].metadata.uid

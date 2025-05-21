@@ -1,0 +1,14 @@
+#!/bin/bash
+
+export PYTHONPATH=kassette:${PYTHONPATH}
+
+set -e
+set -u
+set -o pipefail
+
+cd "$(dirname "$0")/.."
+
+flake8 --append-config .flake8.conf kassette
+mypy kassette
+isort --profile black --check-only kassette
+exec black --check kassette

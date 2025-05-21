@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyyaml = "~=6.0"
+
+[dev-packages]
+flake8 = "~=7.2"
+black = "~=25.1"
+pep8-naming = "~=0.15"
+pytest = "~=8.3"
+isort = "~=6.0"
+mypy = "~=1.15"
+types-pyyaml = "~=6.0"
+
+[requires]
+python_version = "3.12"
