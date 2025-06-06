@@ -1,0 +1,16 @@
+---
+config:
+  labels:
+    app.kubernetes.io/instance: demo
+  kinds:
+    deploy:
+      enabled: true
+      labels:
+        app.kubernetes.io/component: web
+    service:
+      enabled: true
+      filters:
+        out:
+          - .items.[].metadata.labels.something
+    secret:
+      enabled: false

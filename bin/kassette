@@ -1,0 +1,54 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+import argparse
+
+from config import Config
+from kassette import Kassette
+from kassettes import Kassettes
+
+if __name__ == "__main__":
+    main_args = argparse.ArgumentParser(
+        prog="kassette",
+        description="Kassette, the kubernetes cassette 📼",
+    )
+    main_args.add_argument(
+        "-c", "--config", help="Path to the config file", default="kassette.yaml"
+    )
+    main_args.add_argument("--context", help="Kubernetes context to use", default=None)
+    main_args.add_argument(
+        "--namespace", help="Kubernetes namespace to use", default="default"
+    )
+
+    subparsers = main_args.add_subparsers(help="Sub-command help", dest="command")
+
+    modify_args = subparsers.add_parser(
+        "modify", help="Modifies kassettes files directly"
+    )
+    modify_args.add_argument("kind", help="Kind to modify (e.g., 'deploy', 'service')")
+    modify_args.add_argument(
+        "path",
+        help="Path to modify (e.g., .items.[].metadata.labels.{app.kubernetes.io/component})",
+    )
+    modify_args.add_argument("value", help="Value to set (e.g., 'new-value')")
+
+    record_args = subparsers.add_parser("record", help="record kassettes")
+    record_args.add_argument("example", help="Example to (re)record kassettes for")
+
+    diff_args = subparsers.add_parser("diff", help="diff kassettes")
+    diff_args.add_argument("example", help="Example to diff kassettes for")
+
+    args = main_args.parse_args()
+
+    config = Config(args.config, args.namespace, args.context)
+    if args.command == "modify":
+        for kassette in Kassettes(config).filter_kind(args.kind):
+            kassette.update(args.kind, args.path, args.value)
+    else:
+        if args.command == "record":
+            Kassette(args.example, config=config).record()
+        elif args.command == "diff":
+            Kassette(args.example, config=config).diff()
+        else:
+            main_args.print_help()
+            exit(1)
