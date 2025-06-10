@@ -22,10 +22,10 @@ jobs:
     - name: Activate virtual environment and install dependencies
       run: |
         source venv/bin/activate
-        pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install pipenv
+        pipenv sync
     
     - name: Run tests
       run: |
         source venv/bin/activate
-        ./bin/test
+        pipenv run ./bin/test
