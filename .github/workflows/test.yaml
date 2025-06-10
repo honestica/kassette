@@ -20,7 +20,7 @@ jobs:
       run: pip install pipenv
     
     - name: Install dependencies
-      run: pipenv sync
+      run: pipenv sync --dev
     
     - name: Run tests
       run: pipenv run ./bin/test
