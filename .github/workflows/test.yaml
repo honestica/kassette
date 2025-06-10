@@ -16,16 +16,11 @@ jobs:
       with:
         python-version: '3.12'
     
-    - name: Create virtual environment
-      run: python -m venv venv
+    - name: Install pipenv
+      run: pip install pipenv
     
-    - name: Activate virtual environment and install dependencies
-      run: |
-        source venv/bin/activate
-        pip install pipenv
-        pipenv sync
+    - name: Install dependencies
+      run: pipenv sync
     
     - name: Run tests
-      run: |
-        source venv/bin/activate
-        pipenv run ./bin/test
+      run: pipenv run ./bin/test
