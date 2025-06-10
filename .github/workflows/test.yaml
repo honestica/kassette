@@ -1,0 +1,31 @@
+name: Run Tests
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    
+    - name: Create virtual environment
+      run: python -m venv venv
+    
+    - name: Activate virtual environment and install dependencies
+      run: |
+        source venv/bin/activate
+        pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Run tests
+      run: |
+        source venv/bin/activate
+        ./bin/test
