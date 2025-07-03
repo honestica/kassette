@@ -7,7 +7,7 @@ name = "pypi"
 pyyaml = "~=6.0"
 
 [dev-packages]
-flake8 = "~=7.2"
+flake8 = "~=7.3"
 black = "~=25.1"
 pep8-naming = "~=0.15"
 pytest = "~=8.4"
