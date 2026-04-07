@@ -12,7 +12,7 @@ black = "~=26.3"
 pep8-naming = "~=0.15"
 pytest = "~=9.0"
 isort = "~=8.0"
-mypy = "~=1.19"
+mypy = "~=1.20"
 types-pyyaml = "~=6.0"
 
 [requires]
