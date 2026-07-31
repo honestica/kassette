@@ -2,9 +2,8 @@ import glob
 import logging
 import os
 
-from config import Config
-
-from kassette import Kassette
+from kassette.config import Config
+from kassette.kassette import Kassette
 
 
 class Kassettes:

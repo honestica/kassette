@@ -1,13 +1,12 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
 import argparse
 
-from config import Config
-from kassette import Kassette
-from kassettes import Kassettes
+from kassette.config import Config
+from kassette.kassette import Kassette
+from kassette.kassettes import Kassettes
 
-if __name__ == "__main__":
+
+def run() -> None:
     main_args = argparse.ArgumentParser(
         prog="kassette",
         description="Kassette, the kubernetes cassette 📼",

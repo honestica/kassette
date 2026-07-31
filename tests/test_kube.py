@@ -1,12 +1,12 @@
 import unittest
 from unittest import mock
 
-from kube import Kube
+from kassette.kube import Kube
 
 
 class TestKube(unittest.TestCase):
     def test_get(self):
-        with mock.patch("kube.subprocess.check_output") as mock_check_output:
+        with mock.patch("kassette.kube.subprocess.check_output") as mock_check_output:
             mock_check_output.return_value = b"""
 items:
   - kind: Pod

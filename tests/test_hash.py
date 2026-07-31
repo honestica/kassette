@@ -1,6 +1,6 @@
 import unittest
 
-from hash import Hash
+from kassette.hash import Hash
 
 
 class TestHash(unittest.TestCase):

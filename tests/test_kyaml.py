@@ -1,6 +1,6 @@
 import unittest
 
-from kyaml import Kyaml
+from kassette.kyaml import Kyaml
 
 
 class TestKyaml(unittest.TestCase):

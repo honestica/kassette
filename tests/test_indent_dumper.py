@@ -1,7 +1,8 @@
 import unittest
 
 import yaml
-from indent_dumper import IndentDumper
+
+from kassette.indent_dumper import IndentDumper
 
 
 class TestIndentDumper(unittest.TestCase):

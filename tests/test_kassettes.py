@@ -1,7 +1,7 @@
 import unittest
 
-from config import Config
-from kassettes import Kassettes
+from kassette.config import Config
+from kassette.kassettes import Kassettes
 
 
 class TestKassettes(unittest.TestCase):

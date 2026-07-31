@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bin/fmt)",
+      "Bash(bin/lint)",
+      "Bash(bin/test)",
+      "Bash(bin/test *)",
+      "Bash(pipenv run bin/fmt)",
+      "Bash(pipenv run bin/lint)",
+      "Bash(pipenv run bin/test)",
+      "Bash(pipenv run bin/test *)",
+      "Bash(pipenv run pip install -e .)",
+      "Bash(pipenv sync --dev)",
+      "Bash(python -m build *)",
+      "Bash(twine check *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git status *)"
+    ]
+  }
+}

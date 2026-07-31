@@ -1,6 +1,6 @@
 import unittest
 
-from config import Config
+from kassette.config import Config
 
 
 class TestConfig(unittest.TestCase):
