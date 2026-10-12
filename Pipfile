@@ -8,7 +8,7 @@ pyyaml = "~=6.0"
 
 [dev-packages]
 flake8 = "~=7.4"
-black = "~=26.5"
+black = "~=26.10"
 pep8-naming = "~=0.15"
 pytest = "~=9.1"
 isort = "~=9.0"
