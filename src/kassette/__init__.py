@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import argparse
+import sys
 
 from kassette.config import Config
 from kassette.kassette import Kassette
@@ -47,7 +48,8 @@ def run() -> None:
         if args.command == "record":
             Kassette(args.example, config=config).record()
         elif args.command == "diff":
-            Kassette(args.example, config=config).diff()
+            exit_code, _ = Kassette(args.example, config=config).diff()
+            sys.exit(exit_code)
         else:
             main_args.print_help()
             exit(1)
