@@ -4,6 +4,8 @@ Kubernetes snapshot testing tool (inspired by Ruby VCR): records `kubectl get` o
 
 Published on PyPI as `kassette-k8s`; the Python package and the CLI command are both named `kassette`.
 
+The GitHub repository is **public**: anyone can open a PR from a fork, so never put internal names, hostnames, cluster data or secrets in the code, tests, examples or snapshots.
+
 ## Layout
 
 - `src/kassette/`: the package (`__init__.py` holds the CLI entry point `run()`)
@@ -29,6 +31,8 @@ pipenv run bin/fmt     # isort + black
 - Add or update tests for every change
 - Code, commits and documentation are written in English
 - Never commit secrets
+- GitHub Actions are pinned by commit SHA with the version in a trailing comment (`uses: owner/action@<sha> # vX.Y.Z`), never by tag; Dependabot keeps them up to date
+- Workflows declare minimal `permissions` and never use `pull_request_target`
 
 ## Packaging
 
