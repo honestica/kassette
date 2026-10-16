@@ -42,5 +42,16 @@ pipenv run bin/test
 pipenv run bin/lint
 ```
 
-# Next steps
-- use CI to run tests and linting
+## End-to-end test
+
+`bin/e2e` records and diffs the `examples/demo` kassettes against a disposable [kind](https://kind.sigs.k8s.io/) cluster (resources defined in `tests/e2e.yaml`).
+
+It requires `docker`, `kind` and `kubectl`.
+
+```bash
+pipenv run bin/e2e
+```
+
+The cluster is created with a temporary kubeconfig (your `~/.kube/config` is left untouched) and deleted at the end, even on failure.
+
+The test fails if recording changes the files in `examples/demo`: when this is expected (e.g. a new Kubernetes version in kind), review the diff and commit the new kassettes.

@@ -1,0 +1,80 @@
+#!/bin/bash
+
+set -e
+set -u
+set -o pipefail
+
+cd "$(dirname "$0")/.."
+
+cluster="kassette-e2e"
+namespace="kassette-e2e"
+tmp_dir=$(mktemp -d)
+export KUBECONFIG="${tmp_dir}/kubeconfig"
+
+for cmd in docker kind kubectl kassette; do
+  if ! command -v "${cmd}" >/dev/null; then
+    echo "Missing required command: ${cmd}" >&2
+    exit 1
+  fi
+done
+
+if kind get clusters 2>/dev/null | grep -qx "${cluster}"; then
+  echo "A kind cluster named ${cluster} already exists, delete it first" >&2
+  exit 1
+fi
+
+cleanup() {
+  kind delete cluster --name "${cluster}" --kubeconfig "${KUBECONFIG}" >/dev/null 2>&1 || true
+  rm -rf "${tmp_dir}"
+}
+trap cleanup EXIT
+
+kassette_cmd=(kassette --context "kind-${cluster}" --namespace "${namespace}")
+
+echo "⌚ Creating kind cluster ${cluster}" >&2
+kind create cluster --name "${cluster}" --kubeconfig "${KUBECONFIG}" --wait 120s
+
+echo "🏃 Deploying the demo resources" >&2
+kubectl apply -f tests/e2e.yaml
+kubectl --namespace "${namespace}" rollout status deployment/demo-web --timeout=120s
+
+echo "📼 Recording the demo kassettes" >&2
+"${kassette_cmd[@]}" record demo
+if [ -z "$(git status --porcelain -- examples/demo)" ]; then
+  echo "✅ Recording matches the committed examples/demo" >&2
+else
+  echo "💥 FAIL: recording changed examples/demo, review the diff:"
+  git -c color.status=always status --short -- examples/demo
+  git -c color.diff=always diff -- examples/demo
+  exit 1
+fi
+
+echo "🚀 Diff on an unchanged cluster must succeed" >&2
+if "${kassette_cmd[@]}" diff demo; then
+  echo "✅ No differences, as expected" >&2
+else
+  echo "💥 FAIL: unexpected differences"
+  exit 1
+fi
+
+echo "🚀 Diff after a change must fail" >&2
+kubectl --namespace "${namespace}" scale deployment/demo-web --replicas=2
+rc=0
+out=$("${kassette_cmd[@]}" diff demo 2>&1) || rc=$?
+echo "Expected: exit code 1 and a diff on spec.replicas (1 -> 2). Got exit code ${rc}:" >&2
+echo "${out}"
+if [ "${rc}" -eq 1 ]; then
+  echo "✅ Diff failed with exit code 1, as expected" >&2
+else
+  echo "💥 FAIL: expected exit code 1 after the change, got ${rc}"
+  exit 1
+fi
+if grep -q "replicas" <<<"${out}"; then
+  echo "✅ The replicas change is reported in the diff" >&2
+else
+  echo "💥 FAIL: the replicas change is not reported in the diff"
+  exit 1
+fi
+echo "Difference detected as expected" >&2
+
+echo "OK"
