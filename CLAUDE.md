@@ -9,9 +9,9 @@ The GitHub repository is **public**: anyone can open a PR from a fork, so never 
 ## Layout
 
 - `src/kassette/`: the package (`__init__.py` holds the CLI entry point `run()`)
-- `tests/`: unit tests (`unittest` style, run with pytest)
-- `examples/`: sample kassette configurations
-- `bin/`: dev scripts (`test`, `lint`, `fmt`)
+- `tests/`: unit tests (`unittest` style, run with pytest) and `e2e.yaml`, the resources deployed by the end-to-end test
+- `examples/`: sample kassette configurations (`examples/demo` doubles as the end-to-end reference, see below)
+- `bin/`: dev scripts (`test`, `lint`, `fmt`, `e2e`, `publish`)
 
 ## Commands
 
@@ -22,7 +22,18 @@ pipenv sync --dev
 pipenv run bin/test    # pytest
 pipenv run bin/lint    # flake8, mypy (strict), isort, black --check
 pipenv run bin/fmt     # isort + black
+pipenv run bin/e2e     # end-to-end test, see below
 ```
+
+## End-to-end test
+
+`bin/e2e` is local only (not run in CI). It needs `docker`, `kind` and `kubectl`, and creates a disposable kind cluster with a temporary kubeconfig, deployed from `tests/e2e.yaml`. It then checks that:
+
+- `kassette record demo` leaves the committed `examples/demo` files unchanged
+- `kassette diff demo` exits with 0 on the unchanged cluster
+- `kassette diff demo` exits with 1 once the Deployment replicas are changed
+
+Never run it against an existing cluster, and ask before running it: it starts Docker containers. If `record` changes `examples/demo`, review the diff before committing the new kassettes.
 
 ## Conventions
 
@@ -39,3 +50,5 @@ pipenv run bin/fmt     # isort + black
 - Build metadata lives in `pyproject.toml` (setuptools, `src/` layout)
 - The license is declared as an SPDX expression: do not add a `License ::` classifier, setuptools rejects it
 - Check a build with `python -m build` then `twine check dist/*`
+- Releases: bump `version` in `pyproject.toml`, merge to `master`, then push the tag `vX.Y.Z` (it must match the version). `release.yaml` publishes to PyPI through Trusted Publishing, after approval on the `pypi` environment. Never push a release tag without being asked
+- Every push to `master` touching `src/**`, `pyproject.toml` or `README.md` publishes a `.devN` version to TestPyPI (`publish-test.yaml`)
