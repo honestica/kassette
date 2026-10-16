@@ -16,13 +16,11 @@ workflows:
     jobs:
       - bot/sast:
           context: org-global
-          extraArgs: "--exclude applications/"
 
   sast_scan:
     jobs:
       - bot/sast:
           context: org-global
-          extraArgs: "--exclude applications/"
           filters:
             branches:
               ignore:
