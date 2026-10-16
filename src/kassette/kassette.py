@@ -5,10 +5,10 @@ import re
 import sys
 from typing import Any
 
-from config import Config
-from filtre import Filter
-from kube import Kube
-from kyaml import Kyaml
+from kassette.config import Config
+from kassette.filtre import Filter
+from kassette.kube import Kube
+from kassette.kyaml import Kyaml
 
 
 class Kassette:

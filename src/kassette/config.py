@@ -3,7 +3,8 @@ import sys
 from typing import Any
 
 import yaml
-from hash import Hash
+
+from kassette.hash import Hash
 
 
 class Config:

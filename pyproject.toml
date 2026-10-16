@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "kassette-k8s"
+version = "0.0.1"
+authors = [
+  { name = "Lifen" }
+]
+description = "Another kubernetes snapshot testing tool"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml~=6.0",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Testing",
+]
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+
+[project.urls]
+Homepage = "https://github.com/honestica/kassette"
+Issues = "https://github.com/honestica/kassette/issues"
+
+
+[project.scripts]
+kassette = "kassette:run"

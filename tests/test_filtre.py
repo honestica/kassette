@@ -1,6 +1,6 @@
 import unittest
 
-from filtre import Filter
+from kassette.filtre import Filter
 
 
 class TestFilter(unittest.TestCase):

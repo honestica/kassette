@@ -22,5 +22,8 @@ jobs:
     - name: Install dependencies
       run: pipenv sync --dev
     
+    - name: Install kassette
+      run: pipenv run pip install -e .
+
     - name: Run tests
-      run: pipenv run ./bin/test
+      run: pipenv run bin/test

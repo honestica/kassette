@@ -2,8 +2,8 @@ import os
 import unittest
 from unittest import mock
 
-from config import Config
-from kassette import Kassette
+from kassette.config import Config
+from kassette.kassette import Kassette
 
 
 class TestKassette(unittest.TestCase):
