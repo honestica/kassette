@@ -38,3 +38,52 @@ items:
             self.assertEqual(len(result["items"]), 1)
             self.assertEqual(result["items"][0]["kind"], "Pod")
             self.assertEqual(result["items"][0]["metadata"]["name"], "test-pod")
+
+    def test_get_with_multiple_labels(self):
+        with mock.patch("kassette.kube.subprocess.check_output") as mock_check_output:
+            mock_check_output.return_value = b"items: []"
+            Kube().get("pods", labels={"app": "test", "tier": "web"})
+            mock_check_output.assert_called_once_with(
+                [
+                    "kubectl",
+                    "get",
+                    "pods",
+                    "-lapp=test,tier=web",
+                    "--output",
+                    "yaml",
+                    "--namespace",
+                    "default",
+                ]
+            )
+
+    def test_get_without_labels(self):
+        with mock.patch("kassette.kube.subprocess.check_output") as mock_check_output:
+            mock_check_output.return_value = b"items: []"
+            Kube().get("pods")
+            mock_check_output.assert_called_once_with(
+                [
+                    "kubectl",
+                    "get",
+                    "pods",
+                    "--output",
+                    "yaml",
+                    "--namespace",
+                    "default",
+                ]
+            )
+
+    def test_get_with_empty_labels(self):
+        with mock.patch("kassette.kube.subprocess.check_output") as mock_check_output:
+            mock_check_output.return_value = b"items: []"
+            Kube().get("pods", labels={})
+            mock_check_output.assert_called_once_with(
+                [
+                    "kubectl",
+                    "get",
+                    "pods",
+                    "--output",
+                    "yaml",
+                    "--namespace",
+                    "default",
+                ]
+            )

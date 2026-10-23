@@ -14,6 +14,8 @@ class Kube:
         for label, value in kwargs.get("labels", {}).items():
             labels.append(f"{label}={value}")
 
+        if not labels:
+            return self.__kubectl_get([kind])
         return self.__kubectl_get([kind, "-l" + ",".join(labels)])
 
     def __kubectl_get(self, cmd: list[str]) -> Any:
