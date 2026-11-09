@@ -8,6 +8,10 @@ updates:
     time: "10:00"
     timezone: Europe/Paris
     day: monday
+  groups:
+    deps:
+      patterns:
+        - "*"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
@@ -15,3 +19,7 @@ updates:
     time: "10:00"
     timezone: Europe/Paris
     day: monday
+  groups:
+    deps:
+      patterns:
+        - "*"
