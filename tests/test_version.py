@@ -5,6 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 VERSION_RE = re.compile(r"^\d+\.\d+\.\d+$")
+WATCHED_PATHS = ("pyproject.toml", "src")
 
 
 def project_version() -> str:
@@ -33,6 +34,18 @@ def latest_tag_version() -> str | None:
     return max(versions, key=as_tuple)
 
 
+def changed_since_tag(version: str) -> bool:
+    try:
+        output = subprocess.check_output(
+            ["git", "diff", "--name-only", f"v{version}", "--", *WATCHED_PATHS],
+            cwd=ROOT,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return True
+    return bool(output.strip())
+
+
 class TestVersion(unittest.TestCase):
     def test_version_format(self):
         self.assertRegex(project_version(), VERSION_RE)
@@ -41,6 +54,8 @@ class TestVersion(unittest.TestCase):
         latest = latest_tag_version()
         if latest is None:
             self.skipTest("no vX.Y.Z git tag available")
+        if not changed_since_tag(latest):
+            self.skipTest(f"no change in {', '.join(WATCHED_PATHS)} since v{latest}")
         self.assertGreater(
             as_tuple(project_version()),
             as_tuple(latest),
