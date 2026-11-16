@@ -599,12 +599,12 @@
         },
         "types-pyyaml": {
             "hashes": [
-                "sha256:444654c61f635dab82c092a511aa96a0ce31164810784b9a37314e3e56532ac8",
-                "sha256:7a1b5f837881dd35d5448b5f18275164f89f206185e31e8eae6e0b42607bc001"
+                "sha256:0828be2580fd94151182364f4d0158e4de62fdbeeb8d4296f7f7d2b6c22bb640",
+                "sha256:3600749e613748afdc4327f0b17c3296cf880cdbc7335f320007abd9dd815f67"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.10'",
-            "version": "==6.0.12.20261103"
+            "version": "==6.0.12.20261113"
         },
         "typing-extensions": {
             "hashes": [
